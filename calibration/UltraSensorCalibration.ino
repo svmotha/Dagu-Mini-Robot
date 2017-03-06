@@ -1,19 +1,43 @@
-// Ultrasonic distance sensor
-const int trigPin = 12;                         // Ultrasonic sensor pin connections                       
+/*
+|--------------------------------------------------------------------------
+|
+| Mini Warehouse Robot: Ultrasonic Distance Sensor Calibration
+| Author: MECN3102 Group A2
+| University of the Witwatersrand - Copyright 2017
+| Objective: Gather mean, minimum, and maximun pulse readings for 
+|            incremental distance readings.
+|
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Declaring Global variables & Running Setup Routine:
+|--------------------------------------------------------------------------
+|
+| Creating empty array for mean value calculation, Setting Ultrasonic 
+| sensor pin connections and Initializing serial communication at 
+| 9600 bits per second.
+|
+*/
+const int trigPin = 12;                 
 const int echoPin = 11;
 float distReadings[15];
 
-// ******************************************************************************** 
-// SETUP FUNCTION
-// ********************************************************************************
 void setup()
 {  
-  Serial.begin(9600);                            // initialize serial communication 
+  Serial.begin(9600); 
 }
 
-// ******************************************************************************** 
-// LOOP FUNCTIONS 
-// ********************************************************************************
+/*
+|--------------------------------------------------------------------------
+| Running Loop Function:
+|--------------------------------------------------------------------------
+|
+| Creating array, calculating, mean, min, max, and displaying them on the 
+| serial monitor.
+|
+*/
 void loop()
 { 
   for (int i = 0; i < 15; i++)
@@ -43,12 +67,19 @@ void loop()
   Serial.print(minFunction(distReadings, 15));
   Serial.println("cm");
   delay(500);
-//  exit(0);
+
+  exit(0);  // Ensuring that the loop only runs once
 }
 
-// ********************************************************************************
-// Mean function: Find mean of all Values in an Array of known index
-// ********************************************************************************
+/*
+|--------------------------------------------------------------------------
+| Mean function:
+|--------------------------------------------------------------------------
+|
+| Takes in an array and its index as inputs and returns the average of 
+| all its values.
+|
+*/
 float meanFunction(float voltagesArray[], int arrayIndex)
 {
   float sum = 0;
@@ -60,10 +91,17 @@ float meanFunction(float voltagesArray[], int arrayIndex)
   return mean;
 }
 
-// ********************************************************************************
-// Max function: Find maximum value amongst all values in an array of known index
-// ********************************************************************************
-float maxFunction(float distArray[], int arrayIndex){
+/*
+|--------------------------------------------------------------------------
+| Maximum Function:
+|--------------------------------------------------------------------------
+|
+| Takes in an array and its index as inputs and returns the largest value
+| within it.
+|
+*/
+float maxFunction(float distArray[], int arrayIndex)
+{
   float maxVal = distArray[0];
   for (int i = 1; i < arrayIndex; i++)
   {
@@ -75,9 +113,15 @@ float maxFunction(float distArray[], int arrayIndex){
   return maxVal;
 }
 
-// ********************************************************************************
-// Min function: Find minimum value amongst all values in an array of known index
-// ********************************************************************************
+/*
+|--------------------------------------------------------------------------
+| Minimum Function:
+|--------------------------------------------------------------------------
+|
+| Takes in an array and its index as inputs and returns the smallest value
+| within it.
+|
+*/
 float minFunction(float distArray[], int arrayIndex){
   float minVal = distArray[0];
   for (int i = 1; i < arrayIndex; i++)
@@ -89,28 +133,28 @@ float minFunction(float distArray[], int arrayIndex){
   }
   return minVal;
 }
-// ********************************************************************************
-// Ultrasonic Distance Sensor Function
-// ********************************************************************************
 
-// This code is modified from:
-// https://gist.github.com/flakas/3294829#file-hc-sr04-ino
-
+/*
+|--------------------------------------------------------------------------
+| Ultrasonic Distance Sensor Function:
+|--------------------------------------------------------------------------
+|
+| This function obtains a reading in cm from the ultrasonic distance sensor
+| The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+| Reading the signal from the sensor: 
+|   a HIGH pulse whose duration is the time (in microseconds) from the sending
+|   of the ping to the reception of its echo off of an object. 
+|   To convert the time into a distance:
+|   The speed of sound is 340 m/s or 29.4 microseconds per centimeter.
+|   The ping travels out and back, so to find the distance of the
+|   object we take half of the distance travelled.
+|
+| Please note, this code is modified from:
+| https://gist.github.com/flakas/3294829#file-hc-sr04-ino
+|
+*/
 float ultraSensorDist()
 {
-  // -------------------------------------------------------------------------
-  /* This function obtains a reading in cm from the ultrasonic distance sensor
-   * The sensor is triggered by a HIGH pulse of 10 or more microseconds.
-   * Read the signal from the sensor: 
-   * a HIGH pulse whose duration is the time (in microseconds) from the sending
-   * of the ping to the reception of its echo off of an object. 
-   * To convert the time into a distance:
-   * The speed of sound is 340 m/s or 29.4 microseconds per centimeter.
-   * The ping travels out and back, so to find the distance of the
-   * object we take half of the distance travelled.
-   */
-   // -------------------------------------------------------------------------
-   
   long duration;
   float cm;                           // variables for duration of the ping and the distance result in centimeters
 

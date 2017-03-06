@@ -3,7 +3,7 @@
 |
 | Mini Warehouse Robot: Infrared Distance Sensor Calibration
 | Author: MECN3102 Group A2
-| University of the Witwatersrand | Copyright 2017
+| University of the Witwatersrand - Copyright 2017
 | Objective: Gather mean, minimum, and maximun voltage readings for 
 |            incremental distance readings.
 |
@@ -15,19 +15,20 @@
 | Declaring Global variables & Running Setup Routine:
 |--------------------------------------------------------------------------
 |
-| Creating empty array for mean value calculation. and Initial erial 
+| Creating empty array for mean value calculation and Initializing serial 
 | communication at 9600 bits per second.
 |
 */
 float distReadings[15];
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
 }
 
 /*
 |--------------------------------------------------------------------------
-| Running Loop:
+| Running Loop Function:
 |--------------------------------------------------------------------------
 |
 | Creating array, calculating, mean, min, max, and displaying them on the 
@@ -50,13 +51,15 @@ void loop()
     Serial.println("cm");
     delay(100);
   }
-
+  // Printing mean value to serial monitor.
   Serial.print("Mean value is: ");
   Serial.println(meanFunction(distReadings,15));
   delay(500);
+  // Printing minimum value to serial monitor.
   Serial.print("Minimum value is: ");
   Serial.println(minFunction(distReadings,15));
   delay(500);
+  // Printing maximum value to serial monitor.
   Serial.print("Maximum value is: ");
   Serial.println(maxFunction(distReadings,15));
   delay(500);
@@ -73,11 +76,12 @@ void loop()
 | between 0 - 5 Volts.
 |
 */
-float infraDistance() {
+float infraDistance()
+{
   int sensorValue = analogRead(A0);
   float voltage = sensorValue * (5.0 / 1023.0);
   return voltage;
-  }
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -89,23 +93,26 @@ float infraDistance() {
 | as is seen by the sensor.
 |
 */
-float infraSensorDist(float voltage){
+float infraSensorDist(float voltage)
+{
   float actualDistance = pow((23.694 / voltage), (1 / 0.7478));
   return actualDistance;
 }
 
 /*
 |--------------------------------------------------------------------------
-| Find Mean Value In An Array:
+| Mean function:
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the average of 
 | all its values.
 |
 */
-float meanFunction(float voltagesArray[], int arrayIndex){
-  float sum = 0;
-  for (int i = 0; i < arrayIndex; i++) {
+float meanFunction(float voltagesArray[], int arrayIndex)
+{
+  float sum;
+  for (int i = 0; i < arrayIndex; i++)
+  {
     sum = sum + voltagesArray[i];
   }
   float mean = (sum/arrayIndex);
@@ -114,14 +121,15 @@ float meanFunction(float voltagesArray[], int arrayIndex){
 
 /*
 |--------------------------------------------------------------------------
-| Find Minimum Value In An Array:
+| Minimum Function:
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the smallest value
 | within it.
 |
 */
-float minFunction(float distArray[], int arrayIndex){
+float minFunction(float distArray[], int arrayIndex)
+{
   float minVal = distArray[0];
   for (int i = 1; i < arrayIndex; i++)
   {
@@ -135,14 +143,15 @@ float minFunction(float distArray[], int arrayIndex){
 
 /*
 |--------------------------------------------------------------------------
-| Find Maximum Value in an Array:
+| Maximum Function:
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the largest value
 | within it.
 |
 */
-float maxFunction(float distArray[], int arrayIndex){
+float maxFunction(float distArray[], int arrayIndex)
+{
   float maxVal = distArray[0];
   for (int i = 1; i < arrayIndex; i++)
   {
