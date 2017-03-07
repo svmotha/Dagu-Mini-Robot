@@ -8,5 +8,3 @@ This specific repository is to help Group A2 track and version our code effectiv
 
 ## Contents
 - [Calibration](calibration/readme.md)
-	- [Infrared Sensor](calibration/readme.md)
-	- [Ultrasonic Sensor](calibration/readme.md)
