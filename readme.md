@@ -8,3 +8,4 @@ This specific repository is to help Group A2 track and version our code effectiv
 
 ## Contents
 - [Calibration](calibration/readme.md)
+- [Robot Motion](robotBuild/docs/motion.md)
