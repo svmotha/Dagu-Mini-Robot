@@ -19,11 +19,12 @@
 | communication at 9600 bits per second.
 |
 */
-float distReadings[15];
+int accuracy = 45;
+float distReadings[45];
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(9600); // initialize serial communication at 9600 bits per second:
 }
 
 /*
@@ -37,31 +38,29 @@ void setup()
 */
 void loop()
 {
-  for (int i = 0; i < 15; i++)
+  for (int i = 0; i < accuracy; i++)
   {
     float voltage = infraDistance();
     float distance = infraSensorDist(voltage);
     distReadings[i] = distance;
   }
-  delay(100);
 
-  for (int i = 0; i < 15; i++) 
+  for (int i = 0; i < accuracy; i++) 
   {
     Serial.print(distReadings[i]);
     Serial.println("cm");
-    delay(100);
   }
   // Printing mean value to serial monitor.
   Serial.print("Mean value is: ");
-  Serial.println(meanFunction(distReadings,15));
+  Serial.println(meanFunction(distReadings, accuracy));
   delay(500);
   // Printing minimum value to serial monitor.
   Serial.print("Minimum value is: ");
-  Serial.println(minFunction(distReadings,15));
+  Serial.println(minFunction(distReadings, accuracy));
   delay(500);
   // Printing maximum value to serial monitor.
   Serial.print("Maximum value is: ");
-  Serial.println(maxFunction(distReadings,15));
+  Serial.println(maxFunction(distReadings, accuracy));
   delay(500);
 
   exit(0);  // Ensuring that the loop only runs once
@@ -95,7 +94,7 @@ float infraDistance()
 */
 float infraSensorDist(float voltage)
 {
-  float actualDistance = pow((23.694 / voltage), (1 / 0.7478));
+  float actualDistance = pow((23.669 / voltage), (1 / 0.749));
   return actualDistance;
 }
 
@@ -115,8 +114,7 @@ float meanFunction(float voltagesArray[], int arrayIndex)
   {
     sum = sum + voltagesArray[i];
   }
-  float mean = (sum/arrayIndex);
-  return mean;
+  return float mean = (sum/arrayIndex);
 }
 
 /*

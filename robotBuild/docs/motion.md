@@ -21,10 +21,19 @@ An alternative system is one where the motors both run at the same speed and are
 Whether or not the alignment is done through the varying of the respective motor speeds or the side positioned distance sensor, it is pertinent that the input motor speed be limited to the rated 255. This is done within the goSomewhere( ) function using the **if** conditional code below:
 
 ```
-if (motorSpeed > 255)                          // limit maximum motor speed value 
+if (motorSpeed > 255)                  // limit maximum motor speed value 
   {
     motorSpeed = 255;
   }
 ```
 
 The code ensures that the input motorSpeed variable is limited to a value of 255.
+
+## infraDistance( )
+When called the function takes an analog reading and uses a 10 bit scale to return a value between 0 - 5  volts i.e. divide 5 volts into 1024 parts. This voltage is converted into an actual distance value using the trendline equation derived from the calibration data within the sesorCalibration.numbers file. The trendline equation is shown below:
+
+```
+x = (23.694 / y)^(1 / 0.7478)
+```
+The function then returns the actual distance (x in the equation above) in cm.
+

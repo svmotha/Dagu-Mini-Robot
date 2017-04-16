@@ -22,11 +22,12 @@
 */
 const int trigPin = 12;                 
 const int echoPin = 11;
-float distReadings[15];
+int accuracy = 45;
+float distReadings[45];
 
 void setup()
 {  
-  Serial.begin(9600); 
+  Serial.begin(9600); // initialize serial communication
 }
 
 /*
@@ -40,31 +41,30 @@ void setup()
 */
 void loop()
 { 
-  for (int i = 0; i < 15; i++)
+  for (int i = 0; i < accuracy; i++)
   {
     float distance = ultraSensorDist();
     distReadings[i] = distance;
   }
 
-  for (int i = 0; i < 15; i++)
+  for (int i = 0; i < accuracy; i++)
   {
     Serial.print(distReadings[i]);
     Serial.println("cm");
-    delay(500);
   }
   // Printing mean value to serial monitor.
   Serial.print("Mean Value is: ");
-  Serial.print(meanFunction(distReadings,15));
+  Serial.print(meanFunction(distReadings, accuracy));
   Serial.println("cm");
   delay(500);
   // Printing maximum value to serial monitor.
   Serial.print("Maximum Value is: ");
-  Serial.print(maxFunction(distReadings, 15));
+  Serial.print(maxFunction(distReadings, accuracy));
   Serial.println("cm");
   delay(500);
   // Printing minimum value to serial monitor.
   Serial.print("Minimum value is: ");
-  Serial.print(minFunction(distReadings, 15));
+  Serial.print(minFunction(distReadings, accuracy));
   Serial.println("cm");
   delay(500);
 
@@ -77,7 +77,7 @@ void loop()
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the average of 
-| all its values.
+| all the values within the array.
 |
 */
 float meanFunction(float voltagesArray[], int arrayIndex)
@@ -97,7 +97,7 @@ float meanFunction(float voltagesArray[], int arrayIndex)
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the largest value
-| within it.
+| within the array.
 |
 */
 float maxFunction(float distArray[], int arrayIndex)
@@ -119,7 +119,7 @@ float maxFunction(float distArray[], int arrayIndex)
 |--------------------------------------------------------------------------
 |
 | Takes in an array and its index as inputs and returns the smallest value
-| within it.
+| within the array.
 |
 */
 float minFunction(float distArray[], int arrayIndex){
@@ -155,21 +155,15 @@ float minFunction(float distArray[], int arrayIndex){
 */
 float ultraSensorDist()
 {
-  long duration;
-  float cm;                           // variables for duration of the ping and the distance result in centimeters
-
-  pinMode(trigPin, OUTPUT);           // Set trigPin as output
-  digitalWrite(trigPin, LOW);         // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-  delayMicroseconds(2);               // Duration of LOW pulse
-  digitalWrite(trigPin, HIGH);        // HIGH pulse to trigger sensor
-  delayMicroseconds(10);              // Duration of HIGH pulse
-  digitalWrite(trigPin, LOW);         // Turn HIGH pulse off
- 
-  pinMode(echoPin, INPUT);            // Set echoPin as input
-  duration = pulseIn(echoPin, HIGH);  // Read the signal from the sensor: 
-
-  cm = duration / 29.4 / 2.0;         // convert the time into a distance
-
+  pinMode(trigPin, OUTPUT);                 // Set trigPin as output
+  digitalWrite(trigPin, LOW);               // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+  delayMicroseconds(2);                     // Duration of LOW pulse
+  digitalWrite(trigPin, HIGH);              // HIGH pulse to trigger sensor
+  delayMicroseconds(10);                    // Duration of HIGH pulse
+  digitalWrite(trigPin, LOW);               // Turn HIGH pulse off
+  pinMode(echoPin, INPUT);                  // Set echoPin as input
+  long duration = pulseIn(echoPin, HIGH);   // Read the signal from the sensor: 
+  float cm = duration / 29.4 / 2.0;          // convert the time into a distance
   delay(30);
   return cm;
 }
