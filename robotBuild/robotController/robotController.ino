@@ -95,13 +95,6 @@ void robotProject()
 {
   colourSequence();
   goSomewhere(1, 1, 60, 90, 3);
-//  goSomewhere(0, 0, 45, 90, 2);
-//  goSomewhere(0, 0, 0, 0, 1);
-//  goSomewhere(0, 0, 0, 0, 1);
-//  goSomewhere(0, 0, 0, 90, 0.5);
-//  goSomewhere(0, 0, 0, 0, 1);
-//  goSomewhere(0, 0, 45, 0, 0.5);
-//  goSomewhere(0, 0, 0, 0, 1);
 }
 
 // ******************************************************************************** 
