@@ -2,10 +2,11 @@
 |--------------------------------------------------------------------------
 |
 | Mini Warehouse Robot: Robot Controller
-| Author: MECN3012 Group A2 (2017)
+| Author: Victor Motha as part of MECN3012 Group A2 (2017)
 | University of the Witwatersrand - Copyright 2017
 | Objective: Detect colour sequence, Deliver cups to dispatch bay in 
-|            presented sequence, return back to starting bay. 
+|            presented sequence, return to starting bay (initial
+|            or original robot position).
 |
 |--------------------------------------------------------------------------
 */
@@ -396,7 +397,7 @@ float infraDistance()
     | between 0 - 5 Volts. Then takes the voltage value, and using the
     | trendline equation found in sesorCalibration.numbers to return
     | an approximate actual distance as is seen by the sensor.
-    |
+    |--------------------------------------------------------------------------
   */
 
   float tempArray[5];

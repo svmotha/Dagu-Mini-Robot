@@ -2,10 +2,10 @@
 |--------------------------------------------------------------------------
 |
 | Mini Warehouse Robot: Ultrasonic Distance Sensor Calibration
-| Author: MECN3102 Group A2
+| Author: Victor Motha as part of MECN3012 Group A2 (2017)
 | University of the Witwatersrand - Copyright 2017
-| Objective: Gather mean, minimum, and maximun pulse readings for 
-|            incremental distance readings.
+| Objective: Gather and display mean, minimum, and maximun pulse readings 
+|            for incremental ultrasonic distance sensor readings.
 |
 |--------------------------------------------------------------------------
 */
@@ -18,7 +18,7 @@
 | Creating empty array for mean value calculation, Setting Ultrasonic 
 | sensor pin connections and Initializing serial communication at 
 | 9600 bits per second.
-|
+|--------------------------------------------------------------------------
 */
 const int trigPin = 12;                 
 const int echoPin = 11;
@@ -37,7 +37,7 @@ void setup()
 |
 | Creating array, calculating, mean, min, max, and displaying them on the 
 | serial monitor.
-|
+|--------------------------------------------------------------------------
 */
 void loop()
 { 
@@ -78,7 +78,7 @@ void loop()
 |
 | Takes in an array and its index as inputs and returns the average of 
 | all the values within the array.
-|
+|--------------------------------------------------------------------------
 */
 float meanFunction(float voltagesArray[], int arrayIndex)
 {
@@ -98,7 +98,7 @@ float meanFunction(float voltagesArray[], int arrayIndex)
 |
 | Takes in an array and its index as inputs and returns the largest value
 | within the array.
-|
+|--------------------------------------------------------------------------
 */
 float maxFunction(float distArray[], int arrayIndex)
 {
@@ -120,7 +120,7 @@ float maxFunction(float distArray[], int arrayIndex)
 |
 | Takes in an array and its index as inputs and returns the smallest value
 | within the array.
-|
+|--------------------------------------------------------------------------
 */
 float minFunction(float distArray[], int arrayIndex){
   float minVal = distArray[0];
@@ -151,7 +151,7 @@ float minFunction(float distArray[], int arrayIndex){
 |
 | Please note, this code is modified from:
 | https://gist.github.com/flakas/3294829#file-hc-sr04-ino
-|
+|--------------------------------------------------------------------------
 */
 float ultraSensorDist()
 {
@@ -163,8 +163,9 @@ float ultraSensorDist()
   digitalWrite(trigPin, LOW);               // Turn HIGH pulse off
   pinMode(echoPin, INPUT);                  // Set echoPin as input
   long duration = pulseIn(echoPin, HIGH);   // Read the signal from the sensor: 
-  float cm = duration / 29.4 / 2.0;          // convert the time into a distance
+  float cm = duration / 29.4 / 2.0;         // convert the time into a distance
+  float finalDist = pow( (cm / 1.0014), (1 / 1.0013) );
   delay(30);
-  return cm;
+  return finalDist;
 }
 

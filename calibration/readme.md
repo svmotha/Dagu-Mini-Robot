@@ -7,6 +7,9 @@ Calibration is essential for equipment that must respond to external stimuli. Al
 	- [Data Set Building](#data-set-building)
 	- [Trend Identification](#trend-identification)
 		- [Infrared Sensor](#infrared-sensor)
+			- [First Iteration Trendline Identification](#first-iteration-trendline-identification)
+			- [Second Iteration Trendline Identification](#second-iteration-trendline-identification)
+			- [Third Iteration Trendline Identification](#third-iteration-trendline-identification)
 		- [Ultrasonic Sensor](#ultrasonic-sensor)
 	- [Error Identification](#error-identification)
 		- [Error Correction](#error-correction)
@@ -25,21 +28,52 @@ Two distance sensors mounted perpendicular to one another on the robot allow ass
 All calibration processes take place through a fundamentally iterative methodology. Multiple readings are taken and stored into an array. The array size is directly proportional to the accuracy of the calibration process i.e. the larger the amount of readings collected, the larger the accuracy of the calibration process. The current selected calibration process takes 45 readings. This is purely a subjective amount, it has no prehistoric empirical data to support its effects on the optimization of sensor calibration processes.
 
 ### Trend Identification
-Each voltage data set is collected with essentially one parameter gradually changing to ensure accurate calibration. This (usually common among different types of sensors) is done incrementally. How this is done for the various sensors used within this project is highlighted below.
+All calibration processes are a combination of iterative actual vs detected distance trendline identification processes. The sensor accuracy is directly proportional to the number of iterations. For the purposes of this calibration it has been decided to keep this process limited to three iterations. This is a random number, chosen with no quantitative merits of any kind.
+
+Each data set is collected with essentially one parameter gradually changing to ensure accurate calibration. This (usually common among different types of sensors) is done incrementally. How this is done for the various sensors used within this project is highlighted below.
 
 ##### Infrared Sensor
-Trendline identification involves taking the mean of each set of 45 voltage readings from an incrementally changing distance from the provided wall sample. Which is between 20.0 cm - 100.0 cm, in 5.0 cm increments. These mean values are scatter plotted to identify a trendline equation, which is used to convert all voltage readings into distances in cm. Using Microsoft EXCEL or its OS counterpart Numbers, one can generate an exponential trendline i.e. in the form:
+Each trendline identification process involves taking the mean of each set of sensor readings from an incrementally changing distance from the provided wall sample. This is done between 20.0 cm - 100.0 cm, in 5.0 cm increments. These mean values are scatter plotted to identify a trendline equation, which is used to convert all voltage readings into distances in cm. Using Microsoft EXCEL or its OS counterpart Numbers, one can generate an exponential trendline.
+
+###### First Iteration Trendline Identification
+Plotting the mean voltage readings (given off by the infrared sensor) vs each known distance from the wall sample, gives a trendline with the equation below:
 
 ```
 x = (23.669 / y)^(1 / 0.749)
 ```
 Where:  
-x - The desired acual distance
-y - The voltage value returned by the infrared sensor
+x - The detected distance seen by the sensor
+y - The mean voltage value returned by the infrared sensor
 
 This graphing and trendline equation identification is illustrated in the figure below: 
 **Please Update Image Below** 
-![Infrared Distance Sensor Trendline Identification](../assets/calibration/infraSensorTrendline.png)
+![Infrared Distance Sensor Trendline One Identification](../assets/calibration/infraSensorTrendline1.png)
+
+###### Second Iteration Trendline Identification
+The second iteration follows the first, but requires a new set of distance readings at known distances from the wall sample. Instead of mean voltage readings, the detected distance readings from the first trendline equation are used against actual distances. A second trendline is hence identified from this plot with the equation below:
+
+```
+x = ( (y + 11.588) / 1.4165)
+```
+Where:
+x - The new detected distance seen by the sensor
+y - The mean distance value returned by the infrared sensor using trendline equation one.
+
+This graphing and trendline equation identification is illustrated in the figure below: 
+![Infrared Distance Sensor Trendline Two Identification](../assets/calibration/infraSensorTrendline2.png)
+
+###### Third Iteration Trendline Identification
+The third iteration folows the second, but requires yet another new set of distance readings at known distances from the wall sample. The newly calibrated detected mean distance readings from the second trendline equation are plotted against known actual distances from the wall sample. A third trendline equation is hence identified from this plot with the equation below:
+
+```
+x = (y / 0.7163)^(1 / 1.089)
+```
+Where:
+x - The new and final detected distance seen by the sensor
+y - The mean distance value returned by the infrared sensor using trendline equation two.
+
+This graphing and trendline equation identification is illustrated in the figure below: 
+**Please Insert Image Below** 
 
 ##### Ultrasonic Sensor
 The trendline identification process is similar to that used for the calibration of the Infrared sensor. The only difference is that the sensor itself is intended for short range distances and hence, it is calibrated between 5.0 cm and 25.0 cm in increments of 5.0 cm. Its function also outputs mean distance in cm, instead of mean voltage readings. These mean values are scatter plotted in a similar fashion to that of the infrared sensor. Because the sesnor outputs distance pings instead of voltage readings, the mean value data is used as a correction factor (of sorts) for the sensor outputs. This essentially outputs a Sensor Distance VS Actual Distance curve with an exponetial trendline equation, identified in a similar manner to that of the infrared sensor trendline and of the form:

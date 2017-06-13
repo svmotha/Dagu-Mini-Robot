@@ -2,10 +2,10 @@
 |--------------------------------------------------------------------------
 |
 | Mini Warehouse Robot: Infrared Distance Sensor Calibration
-| Author: MECN3102 Group A2
+| Author: Victor Motha as part of MECN3012 Group A2 (2017)
 | University of the Witwatersrand - Copyright 2017
 | Objective: Gather mean, minimum, and maximun voltage readings for 
-|            incremental distance readings.
+|            incremental infrared distance sensor readings.
 |
 |--------------------------------------------------------------------------
 */
@@ -17,7 +17,7 @@
 |
 | Creating empty array for mean value calculation and Initializing serial 
 | communication at 9600 bits per second.
-|
+|--------------------------------------------------------------------------
 */
 int accuracy = 45;
 float distReadings[45];
@@ -34,7 +34,7 @@ void setup()
 |
 | Creating array, calculating, mean, min, max, and displaying them on the 
 | serial monitor.
-|
+|--------------------------------------------------------------------------
 */
 void loop()
 {
@@ -73,7 +73,7 @@ void loop()
 |
 | Takes an anolog reading and uses a 10 bit scale to return a value 
 | between 0 - 5 Volts.
-|
+|--------------------------------------------------------------------------
 */
 float infraDistance()
 {
@@ -90,7 +90,7 @@ float infraDistance()
 | Takes in a voltage value, and using the trendline equation found in 
 | sesorCalibration.numbers to return an approximate actual distance 
 | as is seen by the sensor.
-|
+|--------------------------------------------------------------------------
 */
 float infraSensorDist(float voltage)
 {
@@ -105,7 +105,7 @@ float infraSensorDist(float voltage)
 |
 | Takes in an array and its index as inputs and returns the average of 
 | all its values.
-|
+|--------------------------------------------------------------------------
 */
 float meanFunction(float voltagesArray[], int arrayIndex)
 {
@@ -114,7 +114,8 @@ float meanFunction(float voltagesArray[], int arrayIndex)
   {
     sum = sum + voltagesArray[i];
   }
-  return float mean = (sum/arrayIndex);
+  float mean = (sum/arrayIndex);
+  return mean;
 }
 
 /*
@@ -124,7 +125,7 @@ float meanFunction(float voltagesArray[], int arrayIndex)
 |
 | Takes in an array and its index as inputs and returns the smallest value
 | within it.
-|
+|--------------------------------------------------------------------------
 */
 float minFunction(float distArray[], int arrayIndex)
 {
@@ -146,7 +147,7 @@ float minFunction(float distArray[], int arrayIndex)
 |
 | Takes in an array and its index as inputs and returns the largest value
 | within it.
-|
+|--------------------------------------------------------------------------
 */
 float maxFunction(float distArray[], int arrayIndex)
 {
